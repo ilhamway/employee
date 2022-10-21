@@ -24,7 +24,7 @@ if (isset($_POST["login"])) {
 
 			$_SESSION["login"]=true;
             $_SESSION["username"]=$row["username"];
-            $_SESSION["id"]=$row["id"];
+            $_SESSION["id_user"]=$row["id_user"];
             $_SESSION["id_jenis_user"]=$row["id_jenis_user"];
 
 			header("Location: index.php");

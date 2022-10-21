@@ -92,6 +92,19 @@ function menu($data) {
 	mysqli_query($conn, "INSERT INTO menu VALUES ('$id', '$level', '$name', '$link', '$icon', 
     '$parent_id', '$create_by', '$create_date', 'N', '$create_by', '$update_date' )");
 
+	if(mysqli_affected_rows($conn) > 0){
+		$user_id = $_SESSION["id_user"];
+		$deskripsi = "menambah menu ".$name;
+		$status = "success";
+		$menu_id = "1";
+		$delete_mark = "N";
+		$create_by = $_SESSION["username"];
+		$create_date = date('Y-m-d H:i:s');
+		
+		mysqli_query($conn, "INSERT INTO user_activity VALUES ('', '$user_id', '$deskripsi', '$status', '$menu_id', 
+		'$delete_mark', '$create_by', '$create_date')");
+	}
+
 	return mysqli_affected_rows($conn);
 }
 
@@ -119,6 +132,20 @@ function level($data) {
 function delete($id) {
 	global $conn;
 	mysqli_query($conn, "DELETE FROM menu WHERE menu_id = '$id'");
+	
+	if(mysqli_affected_rows($conn) > 0){
+		$user_id = $_SESSION["id_user"];
+		$deskripsi = "menghapus menu id ".$id;
+		$status = "success";
+		$menu_id = "1";
+		$delete_mark = "N";
+		$create_by = $_SESSION["username"];
+		$create_date = date('Y-m-d H:i:s');
+		
+		mysqli_query($conn, "INSERT INTO user_activity VALUES ('', '$user_id', '$deskripsi', '$status', '$menu_id', 
+		'$delete_mark', '$create_by', '$create_date')");
+	}
+
 	return mysqli_affected_rows($conn);
 }
 

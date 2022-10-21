@@ -43,10 +43,10 @@
                 <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="menu.php">Menu</a>
+                <a class="nav-link active" href="menu.php">Menu</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="register.php">Register</a>
+                <a class="nav-link" aria-current="page" href="register.php">Register</a>
                 </li>
             </ul>
             <form class="d-flex align-items-center">
