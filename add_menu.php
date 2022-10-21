@@ -7,17 +7,19 @@
 
 	require 'functions.php';
 
-	if ( isset($_POST["register"])) {
+	if ( isset($_POST["add_menu"])) {
 
-		if ( registrasi($_POST) > 0) {
+		if (menu($_POST) > 0) {
 		echo " <script>
-				alert('User baru berhasil ditambahkan!');
+				alert('Menu baru berhasil ditambahkan!');
 				document.location.href = 'login.php'
 				</script> ";
-	} else {
-		echo mysqli_error($conn);
-	}
-}
+        } else {
+            echo mysqli_error($conn);
+        }
+    }
+
+    $level = query("SELECT * FROM menu_level")
 ?>
 
 <!doctype html>
@@ -55,55 +57,41 @@
     </div>
     </nav>
     <div class="container">
-        <h1 class="text-center">Register SISI</h1>
+        <h1 class="text-center mt-1">Tambah Menu</h1>
         <div class="mx-auto">
             <form action="" method="post">
-            <div class="row justify-content-center mt-5">
+            <div class="row justify-content-center mt-1">
                 <div class="col-3">
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Nama User</label>
-                        <input type="text" class="form-control" id="nama" name="nama" placeholder="nama user">
+                        <label for="exampleFormControlInput1" class="form-label">Menu name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="username">
+                        <label for="exampleFormControlInput1" class="form-label">Menu Link</label>
+                        <input type="text" class="form-control" id="link" name="link" placeholder="Link">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+                        <label for="exampleFormControlInput1" class="form-label">Menu Icon</label>
+                        <input type="text" class="form-control" id="icon" name="icon" placeholder="Icon">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="password">
+                        <label for="exampleFormControlTextarea1" class="form-label">Parent ID</label>
+                        <input type="text" class="form-control" id="parent_id" name="parent_id" placeholder="Parent ID">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">No. HP</label>
-                        <input type="number" class="form-control" id="no_hp" name="no_hp" placeholder="No HP">
-                    </div> 
-                </div>
-                <div class="col-3">
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">No. WA</label>
-                        <input type="number" class="form-control" id="no_wa" name="no_wa" placeholder="No WA">
+                        <label for="exampleFormControlInput1" class="form-label">Create by</label>
+                        <input type="text" class="form-control" id="create" name="create" value="<?= $_SESSION["username"]; ?>" disabled>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">PIN</label>
-                        <input type="number" class="form-control" id="pin" name="pin" placeholder="PIN">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">ID Jenis User</label>
-                        <input type="number" class="form-control" id="jenis_user" name="jenis_user" placeholder="ID Jenis User">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Status User</label>
-                        <input type="text" class="form-control" id="status" name="status" placeholder="Status">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Dibuat Oleh</label>
-                        <input type="text" class="form-control" id="create_by" name="create_by" placeholder="Status">
+                        <label for="exampleFormControlInput1" class="form-label">Level Menu</label>
+                        <select class="form-control" name="menu_level" id="menu_level">
+                            <?php foreach($level as $row) : ?>
+                                <option value=<?= $row["id_level"]?>><?= $row["level"]; ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="d-grid gap-2">
-                        <button class="btn btn-primary mt-4" type="submit" name="register">Submit</button>
+                        <button class="btn btn-primary mt-4" type="submit" name="add_menu">Submit</button>
                     </div>
                 </div>
             </div>

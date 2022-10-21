@@ -50,4 +50,76 @@ function registrasi($data) {
 	return mysqli_affected_rows($conn);
 }
 
+
+function menu($data) {
+	global $conn;
+
+	function getId($n) {
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$randomString = '';
+	
+		for ($i = 0; $i < $n; $i++) {
+			$index = rand(0, strlen($characters) - 1);
+			$randomString .= $characters[$index];
+		}
+	
+		return $randomString;
+	}
+ 
+
+	date_default_timezone_set("Asia/Bangkok");
+	$id = getId(3);
+    $name = htmlspecialchars($data["name"]);
+	$level = htmlspecialchars($data["menu_level"]);
+    $link = htmlspecialchars($data["link"]);
+    $icon = htmlspecialchars($data["icon"]);
+    $parent_id = htmlspecialchars($data["parent_id"]);
+    $create_by = $_SESSION["username"];
+	$create_date = date('Y-m-d H:i:s');
+	$update_date = date('Y-m-d H:i:s');
+
+	$result = mysqli_query($conn, "SELECT menu_name FROM menu WHERE menu_name = '$name'");
+
+	if ( mysqli_fetch_assoc($result)) {
+		echo "
+			<script>
+				alert('Nama menu sudah ada!')
+			</script>";
+		return false;
+	}
+
+
+	mysqli_query($conn, "INSERT INTO menu VALUES ('$id', '$level', '$name', '$link', '$icon', 
+    '$parent_id', '$create_by', '$create_date', 'N', '$create_by', '$update_date' )");
+
+	return mysqli_affected_rows($conn);
+}
+
+function level($data) {
+	global $conn;
+
+    $level = htmlspecialchars($data["level"]);
+	$id = "lv".$level;
+
+	$result = mysqli_query($conn, "SELECT level FROM menu_level WHERE level = '$level'");
+
+	if ( mysqli_fetch_assoc($result)) {
+		echo "
+			<script>
+				alert('Level sudah ada!')
+			</script>";
+		return false;
+	}
+
+	mysqli_query($conn, "INSERT INTO menu_level VALUES ('$id', '$level')");
+
+	return mysqli_affected_rows($conn);
+}
+
+function delete($id) {
+	global $conn;
+	mysqli_query($conn, "DELETE FROM menu WHERE menu_id = '$id'");
+	return mysqli_affected_rows($conn);
+}
+
 ?>
